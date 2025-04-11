@@ -20,6 +20,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { toast } = useToast();
   const { user } = useAuthSafe();
   
+  const [, navigate] = useLocation();
+  
   const handleAddToCart = async () => {
     if (!user) {
       toast({
@@ -27,6 +29,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         description: "Please login to add items to your cart",
         variant: "destructive"
       });
+      navigate('/auth');
       return;
     }
     
@@ -147,7 +150,23 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
           
           <div className="flex gap-2">
-            <NeoButton size="icon" variant="default" aria-label="Add to wishlist">
+            <NeoButton 
+              size="icon" 
+              variant="default" 
+              aria-label="Add to wishlist"
+              onClick={() => {
+                if (!user) {
+                  toast({
+                    title: "Login required",
+                    description: "Please login to add items to wishlist",
+                    variant: "destructive"
+                  });
+                  navigate('/auth');
+                  return;
+                }
+                // Add wishlist functionality here
+              }}
+            >
               <Heart size={18} />
             </NeoButton>
             <NeoButton 
