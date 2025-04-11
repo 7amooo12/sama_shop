@@ -49,11 +49,11 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Products', href: '/products' },
-    { name: 'AR Experience', href: '/ar-experience' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
+    { name: t('navigation.home'), href: '/' },
+    { name: t('navigation.products'), href: '/products' },
+    { name: t('ar.experience'), href: '/ar-experience' },
+    { name: t('navigation.about', 'About'), href: '/about' },
+    { name: t('navigation.contact', 'Contact'), href: '/contact' },
   ];
 
   return (
@@ -96,6 +96,9 @@ const Navbar = () => {
           <button className="text-white hover:text-electric-blue transition-colors">
             <Search size={20} />
           </button>
+          
+          {/* Language Switcher */}
+          <LanguageSwitcher />
 
           {user ? (
             <div className="relative group">
@@ -214,6 +217,11 @@ const Navbar = () => {
                     </a>
                   </Link>
                 ))}
+                
+                {/* Mobile Language Switcher */}
+                <div className="py-2">
+                  <LanguageSwitcher />
+                </div>
 
                 {user ? (
                   <>

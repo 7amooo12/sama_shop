@@ -11,6 +11,8 @@ import AdminProducts from "@/pages/admin/products";
 import AdminOrders from "@/pages/admin/orders";
 import AdminUsers from "@/pages/admin/users";
 import { ProtectedRoute } from "./lib/protected-route";
+import RTLTransitionWrapper from "@/components/rtl-transition-wrapper";
+import { useTranslation } from "react-i18next";
 
 function Router() {
   return (
@@ -35,8 +37,15 @@ function Router() {
 }
 
 function App() {
+  const { i18n } = useTranslation();
+  const isRTL = i18n.dir() === 'rtl';
+
   return (
-    <Router />
+    <RTLTransitionWrapper>
+      <div dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'font-family-rtl' : 'font-family-ltr'}>
+        <Router />
+      </div>
+    </RTLTransitionWrapper>
   );
 }
 

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
@@ -13,39 +13,26 @@ interface RTLTransitionWrapperProps {
  */
 const RTLTransitionWrapper = ({ children, className = '' }: RTLTransitionWrapperProps) => {
   const { i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const [prevDir, setPrevDir] = useState(i18n.dir());
+  const [key, setKey] = useState(0); // Used to force remount when direction changes
   
-  // The default variants for fade transition
-  const fadeVariants = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
-  };
-  
-  // These more complex variants can be used for directional transitions
-  const slideVariants = {
-    initial: { 
-      opacity: 0,
-      x: isRTL ? -20 : 20,
-    },
-    animate: { 
-      opacity: 1,
-      x: 0,
-    },
-    exit: { 
-      opacity: 0,
-      x: isRTL ? 20 : -20,
-    },
-  };
+  // When direction changes, trigger the animation
+  useEffect(() => {
+    const currentDir = i18n.dir();
+    if (prevDir !== currentDir) {
+      // Update the key to force remount with animation
+      setKey(prevKey => prevKey + 1);
+      setPrevDir(currentDir);
+    }
+  }, [i18n.dir(), prevDir]);
   
   return (
     <motion.div
-      key={i18n.language} // This key change forces a re-render on language change
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      variants={fadeVariants} // Use fadeVariants or slideVariants based on preference
-      transition={{ duration: 0.35, ease: "easeInOut" }}
+      key={key}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: 'easeInOut' }}
       className={className}
     >
       {children}
