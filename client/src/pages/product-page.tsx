@@ -23,7 +23,7 @@ import ProductViewer from '@/components/product/3d-viewer';
 import { formatPrice } from '@/lib/utils';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuthSafe } from '@/hooks/use-auth-safe';
 
 const ProductPage = () => {
   const [, params] = useRoute('/product/:id');
@@ -31,7 +31,7 @@ const ProductPage = () => {
   const [isLightOn, setIsLightOn] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const { toast } = useToast();
-  const { user } = useAuth();
+  const { user } = useAuthSafe();
   
   // Fetch product details
   const { data: product, isLoading, error } = useQuery<Product>({
@@ -211,13 +211,13 @@ const ProductPage = () => {
                     {Array.from({ length: 5 }).map((_, i) => (
                       <span 
                         key={i}
-                        className={i < Math.floor(product.rating) ? "text-glowing-cyan" : "text-muted-gray"}
+                        className={i < Math.floor(product.rating || 0) ? "text-glowing-cyan" : "text-muted-gray"}
                       >
-                        {i < Math.floor(product.rating) ? "★" : "☆"}
+                        {i < Math.floor(product.rating || 0) ? "★" : "☆"}
                       </span>
                     ))}
                   </div>
-                  <span className="ml-2 text-sm text-muted-gray">({product.ratingCount} reviews)</span>
+                  <span className="ml-2 text-sm text-muted-gray">({product.ratingCount || 0} reviews)</span>
                 </div>
                 
                 {/* Price */}

@@ -1,11 +1,16 @@
-import { useAuth } from './use-auth';
+import { useContext } from "react";
+import { AuthContext } from "./use-auth";
 
-// Safe auth hook that can be used even when AuthProvider is not available
+/**
+ * A safe version of useAuth that returns a default state when outside of AuthProvider
+ * instead of throwing an error. This is useful in components that might render
+ * before AuthProvider is available.
+ */
 export function useAuthSafe() {
-  try {
-    return useAuth();
-  } catch (error) {
-    // Return a fallback when auth context is not available
+  const context = useContext(AuthContext);
+  
+  if (!context) {
+    // Return a default state that won't crash the application
     return {
       user: null,
       isLoading: false,
@@ -13,15 +18,23 @@ export function useAuthSafe() {
       loginMutation: {
         mutate: () => {},
         isPending: false,
+        isError: false,
+        error: null,
       },
       logoutMutation: {
         mutate: () => {},
         isPending: false,
+        isError: false,
+        error: null,
       },
       registerMutation: {
         mutate: () => {},
         isPending: false,
+        isError: false,
+        error: null,
       },
     };
   }
+  
+  return context;
 }
