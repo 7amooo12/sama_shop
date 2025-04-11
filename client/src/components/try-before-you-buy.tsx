@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Upload, Camera, Image, Lightbulb, WandSparkles } from 'lucide-react';
-import { useLocation } from 'wouter';
-import { useToast } from '@/hooks/use-toast';
-import { useAuthSafe } from '@/hooks/use-auth-safe';
-import { useTranslation } from 'react-i18next';
+import { Link } from 'wouter';
 import HexCard from './ui/hex-card';
 import NeoButton from './ui/neo-button';
 import { useQuery } from '@tanstack/react-query';
@@ -12,10 +9,6 @@ import { Product } from '@shared/schema';
 
 const TryBeforeYouBuy = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const { toast } = useToast();
-  const { user } = useAuthSafe();
-  const [, navigate] = useLocation();
-  const { t } = useTranslation();
   
   // Fetch featured products to display in the thumbnail grid
   const { data: products } = useQuery<Product[]>({
@@ -165,24 +158,11 @@ const TryBeforeYouBuy = () => {
               </div>
             </div>
             
-            {/* Try AR Experience Button */}
-            <button
-              onClick={() => {
-                if (!user) {
-                  toast({
-                    title: t('auth.login_required', 'Login Required'),
-                    description: t('auth.feature_redirect', 'Sign in to access this premium feature!'),
-                    variant: "destructive"
-                  });
-                  navigate('/auth?redirect=/ar-experience');
-                  return;
-                }
-                navigate('/ar-experience');
-              }}
-              className="inline-block px-8 py-3 font-syncopate text-sm font-semibold uppercase tracking-wide bg-gradient-to-r from-electric-blue to-vivid-purple rounded-lg hover:opacity-90 transition duration-300 text-white"
-            >
-              {t('ar.try_experience', 'Try AR Experience')}
-            </button>
+            <Link href="/ar-experience">
+              <a className="inline-block px-8 py-3 font-syncopate text-sm font-semibold uppercase tracking-wide bg-gradient-to-r from-electric-blue to-vivid-purple rounded-lg hover:opacity-90 transition duration-300 text-white">
+                Try AR Experience
+              </a>
+            </Link>
           </motion.div>
         </div>
       </div>
