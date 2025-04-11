@@ -70,7 +70,7 @@ const Navbar = () => {
             <span className="font-syncopate text-2xl font-bold text-white relative">
               <span className="text-electric-blue relative inline-block transform hover:scale-105 transition-transform">
                 LUX
-                <span className="absolute inset-0 blur-sm text-electric-blue opacity-70">LUX</span>
+                <span className="absolute inset-0 blur-sm text-electric-blue opacity-70"></span>
               </span>
             </span>
           </a>
