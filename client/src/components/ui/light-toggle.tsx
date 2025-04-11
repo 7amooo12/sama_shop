@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -9,41 +9,42 @@ interface LightToggleProps {
 }
 
 const LightToggle = ({ isOn = false, onChange, className }: LightToggleProps) => {
-  const [on, setOn] = useState(isOn);
+  const [isActive, setIsActive] = useState(isOn);
   
-  const handleToggle = () => {
-    const newState = !on;
-    setOn(newState);
-    if (onChange) onChange(newState);
+  const toggleLight = () => {
+    const newState = !isActive;
+    setIsActive(newState);
+    onChange?.(newState);
   };
   
   return (
-    <motion.div
+    <motion.button
+      type="button"
+      onClick={toggleLight}
       className={cn(
-        "relative h-[26px] w-[50px] rounded-[13px] cursor-pointer transition-all duration-300",
-        on ? "bg-[#41FFFF] shadow-[0_0_15px_rgba(65,255,255,0.8)]" : "bg-[#1A1E2E] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]",
+        "relative w-9 h-5 rounded-full p-1 transition-colors duration-300",
+        isActive ? "bg-electric-blue shadow-glow" : "bg-gray-700",
         className
       )}
-      onClick={handleToggle}
-      whileTap={{ scale: 0.95 }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 500, 
-        damping: 30 
-      }}
+      whileTap={{ scale: 0.9 }}
+      title={isActive ? "Turn off light" : "Turn on light"}
     >
       <motion.div 
-        className="absolute top-[3px] w-[20px] h-[20px] bg-white rounded-full"
+        className="w-3 h-3 bg-white rounded-full"
         animate={{ 
-          left: on ? '27px' : '3px',
+          x: isActive ? 16 : 0,
+          backgroundColor: isActive ? "#ffffff" : "#a0a0a0" 
         }}
-        transition={{ 
-          type: "spring", 
-          stiffness: 500, 
-          damping: 30 
-        }}
+        transition={{ type: "spring", stiffness: 500, damping: 30 }}
       />
-    </motion.div>
+      
+      {/* Light glow effect */}
+      <motion.div 
+        className="absolute inset-0 rounded-full bg-electric-blue opacity-0"
+        animate={{ opacity: isActive ? 0.3 : 0 }}
+        transition={{ duration: 0.2 }}
+      />
+    </motion.button>
   );
 };
 

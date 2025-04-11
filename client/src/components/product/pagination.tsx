@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import NeoButton from '@/components/ui/neo-button';
 import { cn } from '@/lib/utils';
 
 interface PaginationProps {
@@ -10,94 +11,118 @@ interface PaginationProps {
 const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
   // Generate page numbers to display
   const getPageNumbers = () => {
-    const pageNumbers = [];
+    const pages = [];
+    const maxPagesToShow = 5;
     
-    // Always show first page
-    pageNumbers.push(1);
-    
-    // Start displaying pages from currentPage - 1
-    let startPage = Math.max(2, currentPage - 1);
-    
-    // Add ellipsis if needed
-    if (startPage > 2) {
-      pageNumbers.push('...');
+    // Logic to show appropriate number of page links
+    if (totalPages <= maxPagesToShow) {
+      // If total pages are less than max, show all pages
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Always include first page
+      pages.push(1);
+      
+      // Calculate start and end of page range
+      let start = Math.max(2, currentPage - 1);
+      let end = Math.min(totalPages - 1, currentPage + 1);
+      
+      // Adjust range to always show 3 middle pages when possible
+      if (currentPage <= 2) {
+        end = 4;
+      } else if (currentPage >= totalPages - 1) {
+        start = totalPages - 3;
+      }
+      
+      // Add ellipsis before middle pages if needed
+      if (start > 2) {
+        pages.push('...');
+      }
+      
+      // Add middle pages
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      
+      // Add ellipsis after middle pages if needed
+      if (end < totalPages - 1) {
+        pages.push('...');
+      }
+      
+      // Always include last page
+      if (totalPages > 1) {
+        pages.push(totalPages);
+      }
     }
     
-    // Add middle pages
-    for (let i = startPage; i <= Math.min(totalPages - 1, currentPage + 1); i++) {
-      pageNumbers.push(i);
-    }
-    
-    // Add ellipsis before last page if needed
-    if (currentPage + 2 < totalPages) {
-      pageNumbers.push('...');
-    }
-    
-    // Always show last page
-    if (totalPages > 1) {
-      pageNumbers.push(totalPages);
-    }
-    
-    return pageNumbers;
+    return pages;
   };
   
   const pages = getPageNumbers();
   
-  // Handle page change with validation
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      onPageChange(page);
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
+  };
+  
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      onPageChange(currentPage + 1);
     }
   };
   
   return (
-    <div className="flex items-center justify-center space-x-2">
-      {/* Previous button */}
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
+    <div className="flex items-center justify-center space-x-2 mt-8">
+      <NeoButton
+        onClick={handlePrevPage}
         disabled={currentPage === 1}
+        size="sm"
+        variant="default"
         className={cn(
-          "flex items-center justify-center h-10 w-10 rounded-lg border-2",
-          currentPage === 1
-            ? "border-gray-700 text-gray-600 cursor-not-allowed"
-            : "border-gray-700 hover:border-electric-blue text-white hover:text-electric-blue transition-colors"
+          "text-white p-2",
+          currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
         )}
+        aria-label="Previous page"
       >
-        <ChevronLeft size={18} />
-      </button>
+        <ChevronLeft size={16} />
+      </NeoButton>
       
-      {/* Page numbers */}
-      {pages.map((page, i) => (
-        <button
-          key={i}
-          onClick={() => typeof page === 'number' ? handlePageChange(page) : null}
-          disabled={typeof page !== 'number'}
-          className={cn(
-            "flex items-center justify-center h-10 w-10 rounded-lg font-medium border-2",
-            typeof page !== 'number'
-              ? "border-transparent text-gray-600"
-              : page === currentPage
-                ? "border-electric-blue text-electric-blue"
-                : "border-gray-700 text-white hover:border-electric-blue hover:text-electric-blue transition-colors"
-          )}
-        >
-          {page}
-        </button>
+      {pages.map((page, index) => (
+        page === '...' ? (
+          <span key={`ellipsis-${index}`} className="text-muted-gray px-2">
+            ...
+          </span>
+        ) : (
+          <NeoButton
+            key={`page-${page}`}
+            onClick={() => typeof page === 'number' && onPageChange(page)}
+            variant={currentPage === page ? "primary" : "default"}
+            size="sm"
+            className={cn(
+              "min-w-[36px]",
+              currentPage === page ? "text-white" : "text-muted-gray"
+            )}
+          >
+            {page}
+          </NeoButton>
+        )
       ))}
       
-      {/* Next button */}
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
+      <NeoButton
+        onClick={handleNextPage}
         disabled={currentPage === totalPages}
+        size="sm"
+        variant="default"
         className={cn(
-          "flex items-center justify-center h-10 w-10 rounded-lg border-2",
-          currentPage === totalPages
-            ? "border-gray-700 text-gray-600 cursor-not-allowed"
-            : "border-gray-700 hover:border-electric-blue text-white hover:text-electric-blue transition-colors"
+          "text-white p-2",
+          currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
         )}
+        aria-label="Next page"
       >
-        <ChevronRight size={18} />
-      </button>
+        <ChevronRight size={16} />
+      </NeoButton>
     </div>
   );
 };
