@@ -81,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       queryClient.setQueryData(["/api/user"], user);
       toast({
         title: "Account created!",
-        description: `Welcome to Lumina, ${user.username}`,
+        description: `Welcome to LUX, ${user.username}`,
       });
     },
     onError: (error: Error) => {
