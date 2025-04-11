@@ -1,122 +1,85 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GlobeIcon } from 'lucide-react';
+import { Globe, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const LanguageSwitcher = () => {
-  const { i18n, t } = useTranslation();
+  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [isRTL, setIsRTL] = useState(i18n.language === 'ar');
+  const menuRef = useRef<HTMLDivElement>(null);
   
-  // Set the document direction based on language
-  useEffect(() => {
-    // Get HTML element
-    const htmlElement = document.querySelector('html');
-    if (!htmlElement) return;
-    
-    // Set direction attribute based on language
-    const direction = i18n.language === 'ar' ? 'rtl' : 'ltr';
-    htmlElement.setAttribute('dir', direction);
-    
-    // Update RTL state
-    setIsRTL(direction === 'rtl');
-    
-    // Add a class to the body to make additional RTL/LTR styles easier
-    if (direction === 'rtl') {
-      document.body.classList.add('rtl');
-      document.body.classList.remove('ltr');
-    } else {
-      document.body.classList.add('ltr');
-      document.body.classList.remove('rtl');
-    }
-  }, [i18n.language]);
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'ar', name: 'العربية', flag: '🇦🇪', isRTL: true }
+  ];
+
+  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
   
-  // Toggle dropdown
-  const toggleLanguageDropdown = () => {
-    setIsOpen(!isOpen);
+  const handleLanguageChange = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    setIsOpen(false);
+    
+    // Store the language preference
+    localStorage.setItem('language', langCode);
+    
+    // Set the document direction based on language
+    const isRTL = languages.find(lang => lang.code === langCode)?.isRTL;
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
   };
   
-  // Close dropdown if clicked outside
+  // Click outside handler
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (!target.closest('.language-switcher')) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
     
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
   
-  // Change language handler
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-    setIsOpen(false);
-  };
-  
   return (
-    <div className="language-switcher relative z-50">
+    <div className="relative" ref={menuRef}>
       <button
-        onClick={toggleLanguageDropdown}
-        className={cn(
-          "flex items-center gap-2 px-3 py-2 rounded-full",
-          "transition-all duration-300 ease-in-out",
-          "bg-dark-gray hover:bg-gray-800 text-white",
-          "border border-gray-700 hover:border-electric-blue"
-        )}
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center space-x-1 text-white hover:text-electric-blue transition-colors p-1 rounded-lg"
         aria-label="Toggle language menu"
       >
-        <GlobeIcon size={18} />
-        <span className="text-sm font-medium">
-          {isRTL ? 'العربية' : 'English'}
-        </span>
+        <Globe size={20} />
+        <span className="text-sm hidden sm:inline-block">{currentLanguage.flag}</span>
       </button>
       
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -5 }}
             transition={{ duration: 0.2 }}
-            className={cn(
-              "absolute mt-2 py-2 w-40 bg-dark-gray",
-              "border border-gray-700 rounded-lg shadow-lg",
-              isRTL ? "right-0" : "left-0"
-            )}
+            className="absolute top-full mt-2 right-0 w-40 py-2 bg-dark-gray rounded-lg shadow-xl border border-gray-800 z-50"
           >
-            <ul>
-              <li>
-                <button
-                  onClick={() => changeLanguage('en')}
-                  className={cn(
-                    "w-full text-left px-4 py-2 text-sm",
-                    "transition-colors duration-200",
-                    "hover:bg-gray-800 hover:text-electric-blue",
-                    i18n.language === 'en' ? "text-electric-blue" : "text-white"
-                  )}
-                >
-                  {t('language.english')}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => changeLanguage('ar')}
-                  className={cn(
-                    "w-full text-right px-4 py-2 text-sm",
-                    "transition-colors duration-200",
-                    "hover:bg-gray-800 hover:text-electric-blue",
-                    i18n.language === 'ar' ? "text-electric-blue" : "text-white"
-                  )}
-                >
-                  {t('language.arabic')}
-                </button>
-              </li>
-            </ul>
+            {languages.map(language => (
+              <button
+                key={language.code}
+                onClick={() => handleLanguageChange(language.code)}
+                className={cn(
+                  'flex items-center justify-between w-full px-4 py-2 text-sm text-left transition-colors',
+                  language.code === i18n.language
+                    ? 'text-electric-blue bg-muted'
+                    : 'text-white hover:bg-muted hover:text-electric-blue'
+                )}
+              >
+                <div className="flex items-center">
+                  <span className="mr-2">{language.flag}</span>
+                  <span>{language.name}</span>
+                </div>
+                {language.code === i18n.language && (
+                  <Check size={16} className="text-electric-blue" />
+                )}
+              </button>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>

@@ -133,7 +133,7 @@ const Navbar = () => {
                   onClick={handleLogout}
                   className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-muted hover:text-electric-blue transition-colors"
                 >
-                  Logout
+                  {t('navigation.logout', 'Logout')}
                 </button>
               </div>
             </div>
@@ -232,25 +232,25 @@ const Navbar = () => {
                     {user.isAdmin && (
                       <Link href="/admin">
                         <a className="text-sm text-white hover:text-electric-blue transition-colors">
-                          Admin Dashboard
+                          {t('navigation.admin', 'Admin Dashboard')}
                         </a>
                       </Link>
                     )}
                     <Link href="/profile">
                       <a className="text-sm text-white hover:text-electric-blue transition-colors">
-                        Profile
+                        {t('navigation.profile', 'Profile')}
                       </a>
                     </Link>
                     <Link href="/orders">
                       <a className="text-sm text-white hover:text-electric-blue transition-colors">
-                        My Orders
+                        {t('navigation.orders', 'My Orders')}
                       </a>
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="text-sm text-white hover:text-electric-blue transition-colors text-left"
                     >
-                      Logout
+                      {t('navigation.logout', 'Logout')}
                     </button>
                   </>
                 ) : (
@@ -258,7 +258,7 @@ const Navbar = () => {
                     <hr className="border-gray-800" />
                     <Link href="/auth">
                       <a className="text-sm text-white hover:text-electric-blue transition-colors">
-                        Sign In / Register
+                        {t('navigation.signin', 'Sign In / Register')}
                       </a>
                     </Link>
                   </>

@@ -2,11 +2,23 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-// Import language files
-import enTranslation from '../locales/en.json';
-import arTranslation from '../locales/ar.json';
+// Import language resources
+import enTranslation from '@/locales/en.json';
+import arTranslation from '@/locales/ar.json';
 
-// Configure i18next
+// Define your resources
+const resources = {
+  en: {
+    translation: enTranslation
+  },
+  ar: {
+    translation: arTranslation
+  }
+};
+
+// Get saved language from localStorage
+const savedLanguage = localStorage.getItem('language');
+
 i18n
   // Detect user language
   .use(LanguageDetector)
@@ -14,27 +26,41 @@ i18n
   .use(initReactI18next)
   // Initialize i18next
   .init({
-    resources: {
-      en: {
-        translation: enTranslation
-      },
-      ar: {
-        translation: arTranslation
-      }
-    },
+    resources,
     fallbackLng: 'en',
-    debug: import.meta.env.DEV,
+    // Use saved language if available, otherwise detect from browser
+    lng: savedLanguage || undefined,
+    
+    // Handle keys that contain dots
+    keySeparator: '.',
     
     interpolation: {
-      escapeValue: false, // React already escapes variables
+      // React escapes values by default
+      escapeValue: false
     },
     
-    // Language detection options
+    // Enable RTL for Arabic
+    supportedLngs: ['en', 'ar'],
+    
+    // Set document direction based on current language
+    react: {
+      useSuspense: true
+    },
+    
     detection: {
       order: ['localStorage', 'navigator'],
-      caches: ['localStorage'],
-    },
+      caches: ['localStorage']
+    }
   });
 
-// Export configured i18n instance
+// Set HTML dir attribute based on language direction
+const isRTL = i18n.dir() === 'rtl';
+document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+// Add appropriate class to the HTML element
+if (isRTL) {
+  document.documentElement.classList.add('rtl');
+} else {
+  document.documentElement.classList.remove('rtl');
+}
+
 export default i18n;
