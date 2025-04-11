@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, ShoppingCart, RotateCw } from 'lucide-react';
 import { Product } from '@shared/schema';
