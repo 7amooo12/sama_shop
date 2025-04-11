@@ -49,8 +49,9 @@ const itemVariants = {
 
 const AuthPage = () => {
   const [mode, setMode] = useState<AuthMode>('login');
-  const [searchParams] = useLocation().searchParams;
-  const redirect = searchParams?.get('redirect') || '/';
+  const [location] = useLocation();
+  const searchParams = new URLSearchParams(location.split('?')[1]);
+  const redirect = searchParams.get('redirect') || '/';
   const [isBiometricAvailable, setIsBiometricAvailable] = useState<boolean>(false);
   const [redirectReason, setRedirectReason] = useState<string | null>(null);
   const [, navigate] = useLocation();
