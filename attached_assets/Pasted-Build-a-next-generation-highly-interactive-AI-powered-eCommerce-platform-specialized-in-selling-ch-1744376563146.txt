@@ -1,0 +1,146 @@
+Build a next-generation, highly interactive, AI-powered eCommerce platform specialized in selling chandeliers and modern lighting fixtures. The store must blend cutting-edge technology, immersive product experiences, and powerful admin controls, delivering a luxurious, visually striking, and deeply functional experience for both customers and administrators.
+
+🧩 GENERAL STYLE & VISION
+Tech-futuristic aesthetic with a dark-themed UI.
+
+Visual identity built on hexagonal patterns, glowing circuit lines, and fluid neon animations (blue & violet hues).
+
+Use glassmorphism and neumorphism subtly to add elegance without overloading the interface.
+
+All UI/UX animations must be smooth, fluid, and intuitive, enhanced with Framer Motion, Lottie animations, and Three.js.
+
+The entire store must feel alive and responsive — glowing, moving, shifting with the user’s actions.
+
+💡🛍️ USER-SIDE FEATURES (CLIENT INTERFACE)
+1. Product Cards (Dynamic & Interactive):
+Each product card should have a "Light ON / OFF" toggle button to simulate the chandelier's illumination.
+
+Toggling this simulates the lighting visually in real-time:
+
+Smooth transitions between "off" and "on" states.
+
+Add lighting effects, soft glow, shadow casting.
+
+Optionally add audio feedback (click + electric hum).
+
+Simulate color temperature change (cool/warm) if applicable.
+
+Include 360° view or animated loop when hovered.
+
+2. “Try Before You Buy” AR Experience:
+Let users upload a photo of their room or ceiling.
+
+Allow them to:
+
+Drag & drop a chandelier into the image.
+
+Resize, rotate, and position it easily.
+
+Toggle ON/OFF light effect inside their photo.
+
+AI-assisted placement suggestion (detect ceiling, center of room, etc.).
+
+Optional: Use WebAR to preview the chandelier live via phone camera.
+
+3. Guest Mode + Registered User Experience:
+Guest users can:
+
+Browse, add items to cart, and track orders via order number.
+
+Registered users get:
+
+Personal dashboard (orders, wishlist, reviews).
+
+Product recommendations based on history & behavior.
+
+Notifications & offers via email or browser push.
+
+4. Advanced Filtering & Search:
+Filters: Size, color, material, room type, light temperature, smart control.
+
+AI search suggestions with autocomplete & typo correction.
+
+🔧👨‍💼 ADMIN PANEL FEATURES (POWERFUL CONTROL CENTER)
+1. Full Store Management:
+Add / update / delete products.
+
+Stock management, pricing, and offers.
+
+Manage categories, product tags, and metadata (SEO).
+
+Add product variations (color, size, light modes).
+
+2. Order & User Management:
+View, manage, and update all orders.
+
+View customer profiles, history, and actions.
+
+Offer discount codes, run campaigns, manage abandoned carts.
+
+3. Analytics Dashboard:
+Real-time sales data with charts and heatmaps.
+
+Geographic heatmap of customer orders – shows most active regions.
+
+Track product performance, conversions, and trends.
+
+Abandoned cart tracking and recovery suggestions.
+
+4. Dynamic Banner & Landing Management:
+Update homepage banners, seasonal campaigns, and highlight products.
+
+Set auto-scheduling for banners and limited-time offers.
+
+🧠⚙️ SMART & AI FEATURES
+AI recommendations engine based on browsing, search & purchase history.
+
+Smart upselling and cross-selling widgets in product and cart views.
+
+AI-powered “Best fit for your room” engine.
+
+Dynamic pricing suggestions based on demand and seasonality.
+
+🔒📲 SECURITY & INFRASTRUCTURE
+Secure login with OAuth2, 2FA optional.
+
+Fully responsive design (desktop, tablet, mobile).
+
+SSL encryption and secure payments integration (Visa, Mastercard, Apple Pay, Google Pay, Cash, Installments, eWallets).
+
+Scalable cloud hosting (e.g., Vercel/Netlify for frontend, Firebase/Node/Express/Strapi backend).
+
+🌍📦 MULTI-REGION SUPPORT
+Multi-language (Arabic & English).
+
+Multi-currency support with auto-conversion.
+
+Region-based shipping rules & delivery estimates.
+
+📈 MARKETING & RETENTION FEATURES
+Wishlist with notification when item goes on sale.
+
+Automated emails for:
+
+Order updates
+
+Abandoned carts
+
+New arrivals
+
+Seasonal offers
+
+Social media sharing of product cards with animated previews.
+
+🧱 TECH STACK RECOMMENDATION
+Frontend: React.js + Next.js + TailwindCSS + Framer Motion + Three.js
+
+Backend: Node.js + Express + MongoDB/PostgreSQL
+
+CMS/Admin: Strapi / Direct custom dashboard
+
+AR: WebAR / Unity WebGL (optional)
+
+Deployment: Vercel / Firebase / AWS
+
+Analytics: Google Analytics + Hotjar (for heatmaps)
+
