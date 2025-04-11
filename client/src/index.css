@@ -148,3 +148,85 @@
   0%, 100% { transform: translateY(0) }
   50% { transform: translateY(-10px) }
 }
+
+/* RTL Support */
+.rtl {
+  /* General text direction */
+  text-align: right;
+  
+  /* Flip any default margins/paddings that assume LTR */
+  .ml-1, .ml-2, .ml-3, .ml-4, .ml-5, .ml-6, .ml-8, .ml-auto {
+    margin-left: 0 !important;
+    margin-right: var(--ml-value, 0.25rem) !important;
+  }
+  
+  .mr-1, .mr-2, .mr-3, .mr-4, .mr-5, .mr-6, .mr-8, .mr-auto {
+    margin-right: 0 !important;
+    margin-left: var(--mr-value, 0.25rem) !important;
+  }
+  
+  .pl-1, .pl-2, .pl-3, .pl-4, .pl-5, .pl-6, .pl-8 {
+    padding-left: 0 !important;
+    padding-right: var(--pl-value, 0.25rem) !important;
+  }
+  
+  .pr-1, .pr-2, .pr-3, .pr-4, .pr-5, .pr-6, .pr-8 {
+    padding-right: 0 !important;
+    padding-left: var(--pr-value, 0.25rem) !important;
+  }
+  
+  /* Flip icons and other elements that need to be mirrored */
+  .flip-in-rtl {
+    transform: scaleX(-1);
+  }
+  
+  /* Ensure elements that should start from the right actually do so */
+  .flex {
+    &.justify-start {
+      justify-content: flex-end;
+    }
+    
+    &.justify-end {
+      justify-content: flex-start;
+    }
+  }
+  
+  /* Fix input elements that might have directional styling */
+  input[type="text"], input[type="search"], textarea {
+    text-align: right;
+  }
+  
+  /* Adjust any left/right animations */
+  .slide-in-left {
+    animation-name: slide-in-right;
+  }
+  
+  .slide-in-right {
+    animation-name: slide-in-left;
+  }
+  
+  /* Fix dropdown menus and tooltips positioning */
+  .dropdown-menu, .tooltip {
+    left: auto;
+    right: 0;
+  }
+}
+
+/* Language transition effects */
+.language-fade-enter {
+  opacity: 0;
+}
+
+.language-fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.language-fade-exit {
+  opacity: 1;
+}
+
+.language-fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}

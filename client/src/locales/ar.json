@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "notFound": "غير موجود",
+    "backToHome": "العودة إلى الصفحة الرئيسية",
+    "back": "رجوع",
+    "next": "التالي",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view": "عرض",
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "error": "خطأ",
+    "success": "نجاح",
+    "warning": "تحذير",
+    "info": "معلومات"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "categories": "الفئات",
+    "cart": "سلة التسوق",
+    "account": "الحساب",
+    "orders": "الطلبات",
+    "wishlist": "المفضلة",
+    "admin": "المدير",
+    "login": "تسجيل الدخول",
+    "register": "تسجيل حساب جديد",
+    "logout": "تسجيل الخروج"
+  },
+  "home": {
+    "title": "مرحبًا بك في لومينا",
+    "subtitle": "اكتشف مستقبل الأثاث الفاخر",
+    "featuredProducts": "منتجات مميزة",
+    "newArrivals": "وصل حديثًا",
+    "shopNow": "تسوق الآن",
+    "exploreCollections": "استكشف المجموعات",
+    "viewAll": "عرض الكل"
+  },
+  "products": {
+    "addToCart": "أضف إلى السلة",
+    "addToWishlist": "أضف إلى المفضلة",
+    "outOfStock": "نفذت الكمية",
+    "price": "السعر",
+    "salePrice": "سعر العرض",
+    "off": "خصم",
+    "quantity": "الكمية",
+    "description": "الوصف",
+    "features": "المميزات",
+    "specifications": "المواصفات",
+    "reviews": "التقييمات",
+    "relatedProducts": "قد يعجبك أيضًا",
+    "shipping": "شحن مجاني",
+    "shippingDetails": "للطلبات أكثر من 999 دولار",
+    "warranty": "ضمان 5 سنوات",
+    "warrantyDetails": "تغطية كاملة",
+    "category": "الفئة",
+    "categories": {
+      "all": "جميع الفئات",
+      "chandeliers": "ثريات",
+      "pendants": "معلقات",
+      "sconces": "مصابيح جدارية",
+      "lamps": "مصابيح طاولة",
+      "floor": "مصابيح أرضية"
+    }
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": "سلة التسوق فارغة",
+    "continueShopping": "متابعة التسوق",
+    "checkout": "إتمام الشراء",
+    "subtotal": "المجموع الفرعي",
+    "tax": "الضريبة",
+    "shipping": "الشحن",
+    "total": "الإجمالي",
+    "remove": "إزالة",
+    "update": "تحديث",
+    "clear": "إفراغ السلة"
+  },
+  "auth": {
+    "loginTitle": "مرحبًا بعودتك",
+    "loginSubtitle": "تسجيل الدخول إلى حسابك",
+    "registerTitle": "إنشاء حساب جديد",
+    "registerSubtitle": "انضم إلينا اليوم",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "username": "اسم المستخدم",
+    "fullName": "الاسم الكامل",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "noAccount": "ليس لديك حساب؟",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "createAccount": "إنشاء حساب",
+    "signIn": "تسجيل الدخول"
+  },
+  "ar": {
+    "experience": "تجربة الواقع المعزز",
+    "tryBeforeYouBuy": "جرب قبل الشراء",
+    "scanToView": "امسح رمز QR لمشاهدة في مساحتك",
+    "placeInRoom": "ضع في غرفتك"
+  },
+  "footer": {
+    "company": "الشركة",
+    "about": "من نحن",
+    "careers": "وظائف",
+    "contact": "اتصل بنا",
+    "support": "الدعم",
+    "faq": "الأسئلة الشائعة",
+    "shipping": "الشحن والإرجاع",
+    "warranty": "الضمان",
+    "termsConditions": "الشروط والأحكام",
+    "privacyPolicy": "سياسة الخصوصية",
+    "copyright": "© 2025 لومينا. جميع الحقوق محفوظة.",
+    "newsletter": "اشترك في نشرتنا الإخبارية",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "subscribe": "اشترك"
+  },
+  "account": {
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "addresses": "العناوين",
+    "payments": "طرق الدفع",
+    "orderHistory": "سجل الطلبات"
+  },
+  "language": {
+    "english": "English",
+    "arabic": "العربية"
+  }
+}

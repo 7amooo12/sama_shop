@@ -6,12 +6,16 @@ import { useAuthSafe } from '@/hooks/use-auth-safe';
 import { useQuery } from '@tanstack/react-query';
 import { Cart } from '@shared/schema';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '@/components/language-switcher';
+import RTLTransitionWrapper from '@/components/rtl-transition-wrapper';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
   const { user, logoutMutation } = useAuthSafe();
+  const { t, i18n } = useTranslation();
 
   // Fetch cart data
   const { data: cart } = useQuery<Cart>({
