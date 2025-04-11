@@ -51,7 +51,7 @@ const Navbar = () => {
   const navLinks = [
     { name: t('navigation.home'), href: '/' },
     { name: t('navigation.products'), href: '/products' },
-    { name: t('ar.experience'), href: '/ar-experience' },
+    ...(user ? [{ name: t('ar.experience'), href: '/ar-experience' }] : []),
     { name: t('navigation.about', 'About'), href: '/about' },
     { name: t('navigation.contact', 'Contact'), href: '/contact' },
   ];
