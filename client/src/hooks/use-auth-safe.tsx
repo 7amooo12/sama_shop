@@ -17,21 +17,48 @@ export function useAuthSafe() {
       error: null,
       loginMutation: {
         mutate: () => {},
+        mutateAsync: async () => { 
+          console.warn('AuthProvider not available');
+          return Promise.reject(new Error('AuthProvider not available'));
+        },
         isPending: false,
         isError: false,
         error: null,
+        status: 'idle',
+        isIdle: true,
+        isSuccess: false,
+        data: null,
+        reset: () => {},
       },
       logoutMutation: {
         mutate: () => {},
+        mutateAsync: async () => {
+          console.warn('AuthProvider not available');
+          return Promise.reject(new Error('AuthProvider not available'));
+        },
         isPending: false,
         isError: false,
         error: null,
+        status: 'idle',
+        isIdle: true,
+        isSuccess: false,
+        data: null,
+        reset: () => {},
       },
       registerMutation: {
         mutate: () => {},
+        mutateAsync: async () => {
+          console.warn('AuthProvider not available');
+          return Promise.reject(new Error('AuthProvider not available'));
+        },
         isPending: false,
         isError: false,
         error: null,
+        status: 'idle',
+        isIdle: true,
+        isSuccess: false,
+        data: null,
+        reset: () => {},
       },
     };
   }
