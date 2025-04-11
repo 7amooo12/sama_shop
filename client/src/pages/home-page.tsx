@@ -9,8 +9,12 @@ import TryBeforeYouBuy from '@/components/try-before-you-buy';
 import { Link } from 'wouter';
 import NeoButton from '@/components/ui/neo-button';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import RTLTransitionWrapper from '@/components/rtl-transition-wrapper';
 
 const HomePage = () => {
+  const { t } = useTranslation();
+  
   // Fetch featured products
   const { data: featuredProducts, isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products', { featured: true }],
@@ -33,7 +37,7 @@ const HomePage = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                Featured Collection
+                {t('homepage.featured_collection', 'Featured Collection')}
               </motion.h2>
               
               <motion.div
@@ -43,7 +47,7 @@ const HomePage = () => {
               >
                 <Link href="/products">
                   <a className="text-electric-blue hover:text-glowing-cyan text-sm font-medium flex items-center transition-colors">
-                    View All Products
+                    {t('homepage.view_all_products', 'View All Products')}
                     <ChevronRight className="ml-1 h-4 w-4" />
                   </a>
                 </Link>
@@ -82,10 +86,10 @@ const HomePage = () => {
               transition={{ duration: 0.6 }}
             >
               <h2 className="font-space font-bold text-3xl md:text-4xl mb-4">
-                Why Choose <span className="text-electric-blue">Lumina</span>
+                {t('homepage.why_choose_lux', 'Why Choose')} <span className="text-electric-blue">LUX</span>
               </h2>
               <p className="max-w-2xl mx-auto text-muted-gray">
-                Experience the perfect blend of artistry, technology, and luxury in every one of our lighting solutions.
+                {t('homepage.experience_blend', 'Experience the perfect blend of artistry, technology, and luxury in every one of our furniture pieces.')}
               </p>
             </motion.div>
             
@@ -102,8 +106,8 @@ const HomePage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
                 </div>
-                <h3 className="font-space font-semibold text-xl text-white mb-2">Premium Quality</h3>
-                <p className="text-muted-gray">Handcrafted fixtures using premium materials that stand the test of time.</p>
+                <h3 className="font-space font-semibold text-xl text-white mb-2">{t('homepage.premium_quality', 'Premium Quality')}</h3>
+                <p className="text-muted-gray">{t('homepage.premium_desc', 'Handcrafted furniture using premium materials that stand the test of time.')}</p>
               </motion.div>
               
               <motion.div 
@@ -118,8 +122,8 @@ const HomePage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <h3 className="font-space font-semibold text-xl text-white mb-2">Smart Controls</h3>
-                <p className="text-muted-gray">App-enabled lighting with voice controls, schedules, and customizable scenes.</p>
+                <h3 className="font-space font-semibold text-xl text-white mb-2">{t('homepage.smart_features', 'Smart Features')}</h3>
+                <p className="text-muted-gray">{t('homepage.smart_desc', 'App-enabled furniture with voice controls, comfort settings, and customizable options.')}</p>
               </motion.div>
               
               <motion.div 
@@ -134,8 +138,8 @@ const HomePage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <h3 className="font-space font-semibold text-xl text-white mb-2">AR Technology</h3>
-                <p className="text-muted-gray">Preview fixtures in your space with our advanced augmented reality tool.</p>
+                <h3 className="font-space font-semibold text-xl text-white mb-2">{t('homepage.ar_technology', 'AR Technology')}</h3>
+                <p className="text-muted-gray">{t('homepage.ar_desc', 'Preview furniture in your space with our advanced augmented reality tool.')}</p>
               </motion.div>
             </div>
           </div>
