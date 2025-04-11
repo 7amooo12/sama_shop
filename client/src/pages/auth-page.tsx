@@ -49,6 +49,8 @@ const itemVariants = {
 
 const AuthPage = () => {
   const [mode, setMode] = useState<AuthMode>('login');
+  const [searchParams] = useLocation().searchParams;
+  const redirect = searchParams?.get('redirect') || '/';
   const [isBiometricAvailable, setIsBiometricAvailable] = useState<boolean>(false);
   const [redirectReason, setRedirectReason] = useState<string | null>(null);
   const [, navigate] = useLocation();
@@ -56,7 +58,7 @@ const AuthPage = () => {
   const { user, loginMutation, registerMutation } = useAuthSafe();
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === 'rtl';
-  
+
   // Check for URL parameters that indicate a redirect reason
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -64,7 +66,7 @@ const AuthPage = () => {
     if (reason) {
       setRedirectReason(reason);
     }
-    
+
     // Simulate biometric capability check
     // In a real app, this would check for actual device capabilities
     const checkBiometricCapability = () => {
@@ -72,10 +74,10 @@ const AuthPage = () => {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       setIsBiometricAvailable(isMobile);
     };
-    
+
     checkBiometricCapability();
   }, []);
-  
+
   // Redirect if already logged in
   useEffect(() => {
     if (user) {
@@ -83,13 +85,13 @@ const AuthPage = () => {
       if (user.isAdmin) {
         navigate('/admin');
       } else {
-        navigate('/');
+        navigate(redirect);
       }
     }
-  }, [user, navigate]);
-  
+  }, [user, navigate, redirect]);
+
   if (user) return null; // Don't render anything while redirecting
-  
+
   // Login form
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -98,7 +100,7 @@ const AuthPage = () => {
       password: '',
     },
   });
-  
+
   // Register form
   const registerForm = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -111,7 +113,7 @@ const AuthPage = () => {
       lastName: '',
     },
   });
-  
+
   const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       await loginMutation.mutateAsync(values);
@@ -120,7 +122,7 @@ const AuthPage = () => {
       // Error is handled by the mutation
     }
   };
-  
+
   const onRegisterSubmit = async (values: z.infer<typeof registerSchema>) => {
     try {
       await registerMutation.mutateAsync(values);
@@ -129,17 +131,17 @@ const AuthPage = () => {
       // Error is handled by the mutation
     }
   };
-  
+
   const handleSocialLogin = (provider: string) => {
     // In a real implementation, this would redirect to OAuth provider
     alert(`${provider} login would be implemented with actual OAuth integration`);
   };
-  
+
   const handleBiometricLogin = () => {
     // In a real implementation, this would trigger device biometric authentication
     alert('Biometric authentication would be implemented with actual device APIs');
   };
-  
+
   // Social login buttons
   const SocialLoginButtons = () => (
     <motion.div 
@@ -161,7 +163,7 @@ const AuthPage = () => {
           Google
         </Button>
       </motion.div>
-      
+
       <motion.div variants={itemVariants}>
         <Button
           type="button"
@@ -175,11 +177,11 @@ const AuthPage = () => {
       </motion.div>
     </motion.div>
   );
-  
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <main className="flex-grow py-12">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -199,7 +201,7 @@ const AuthPage = () => {
                     {t('auth.access_account', 'Access your account or create a new one to explore our premium furniture collection.')}
                   </p>
                 </div>
-                
+
                 {/* Show redirect reason if present */}
                 {redirectReason && (
                   <motion.div 
@@ -217,7 +219,7 @@ const AuthPage = () => {
                     </p>
                   </motion.div>
                 )}
-                
+
                 <div className="p-6 rounded-xl bg-dark-gray border border-gray-800 shadow-glow-sm">
                   <Tabs 
                     defaultValue="login" 
@@ -238,7 +240,7 @@ const AuthPage = () => {
                         </span>
                       </TabsTrigger>
                     </TabsList>
-                    
+
                     {/* Login Tab */}
                     <TabsContent value="login">
                       <Form {...loginForm}>
@@ -268,7 +270,7 @@ const AuthPage = () => {
                                 )}
                               />
                             </motion.div>
-                            
+
                             <motion.div variants={itemVariants}>
                               <FormField
                                 control={loginForm.control}
@@ -289,7 +291,7 @@ const AuthPage = () => {
                                 )}
                               />
                             </motion.div>
-                            
+
                             <motion.div variants={itemVariants} className="flex items-center justify-between">
                               <div className="flex items-center space-x-2">
                                 <Checkbox id="remember" />
@@ -301,7 +303,7 @@ const AuthPage = () => {
                                 {t('auth.forgot_password', 'Forgot password?')}
                               </a>
                             </motion.div>
-                            
+
                             <motion.div variants={itemVariants}>
                               <Button 
                                 type="submit" 
@@ -314,7 +316,7 @@ const AuthPage = () => {
                                 {t('auth.sign_in', 'Sign In')}
                               </Button>
                             </motion.div>
-                            
+
                             {/* Biometric login for mobile */}
                             {isBiometricAvailable && (
                               <motion.div variants={itemVariants} className="flex justify-center">
@@ -332,7 +334,7 @@ const AuthPage = () => {
                           </motion.div>
                         </form>
                       </Form>
-                      
+
                       <div className="relative my-5">
                         <div className="absolute inset-0 flex items-center">
                           <Separator className="w-full" />
@@ -343,10 +345,10 @@ const AuthPage = () => {
                           </span>
                         </div>
                       </div>
-                      
+
                       <SocialLoginButtons />
                     </TabsContent>
-                    
+
                     {/* Register Tab */}
                     <TabsContent value="register">
                       <Form {...registerForm}>
@@ -376,7 +378,7 @@ const AuthPage = () => {
                                     </FormItem>
                                   )}
                                 />
-                                
+
                                 <FormField
                                   control={registerForm.control}
                                   name="lastName"
@@ -396,7 +398,7 @@ const AuthPage = () => {
                                 />
                               </div>
                             </motion.div>
-                            
+
                             <motion.div variants={itemVariants}>
                               <FormField
                                 control={registerForm.control}
@@ -416,7 +418,7 @@ const AuthPage = () => {
                                 )}
                               />
                             </motion.div>
-                            
+
                             <motion.div variants={itemVariants}>
                               <FormField
                                 control={registerForm.control}
@@ -437,7 +439,7 @@ const AuthPage = () => {
                                 )}
                               />
                             </motion.div>
-                            
+
                             <motion.div variants={itemVariants}>
                               <FormField
                                 control={registerForm.control}
@@ -458,7 +460,7 @@ const AuthPage = () => {
                                 )}
                               />
                             </motion.div>
-                            
+
                             <motion.div variants={itemVariants}>
                               <FormField
                                 control={registerForm.control}
@@ -479,7 +481,7 @@ const AuthPage = () => {
                                 )}
                               />
                             </motion.div>
-                            
+
                             <motion.div variants={itemVariants}>
                               <div className="flex items-center space-x-2 mb-4">
                                 <Checkbox id="terms" />
@@ -488,7 +490,7 @@ const AuthPage = () => {
                                 </label>
                               </div>
                             </motion.div>
-                            
+
                             <motion.div variants={itemVariants}>
                               <Button 
                                 type="submit" 
@@ -509,7 +511,7 @@ const AuthPage = () => {
                 </div>
               </motion.div>
             </div>
-            
+
             {/* Hero Column */}
             <motion.div
               className="hidden lg:block"
@@ -520,21 +522,21 @@ const AuthPage = () => {
               <div className="relative overflow-hidden rounded-xl aspect-square max-w-md mx-auto shadow-glow-lg">
                 {/* Background pattern */}
                 <div className="absolute inset-0 hex-pattern circuit-lines opacity-30"></div>
-                
+
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-gradient-to-tr from-rich-black/80 to-transparent backdrop-blur-sm">
                   <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-electric-blue to-vivid-purple flex items-center justify-center animate-pulse-slow mb-6 shadow-glow-md">
                     <span className="font-syncopate font-bold text-3xl text-white">LUX</span>
                   </div>
-                  
+
                   <h2 className="font-space font-bold text-3xl text-white mb-4">
                     {t('auth.hero_title', 'Elevate Your Space')}
                   </h2>
-                  
+
                   <p className="text-muted-gray mb-6">
                     {t('auth.hero_description', 'Join our community of design enthusiasts and transform your home with our cutting-edge furniture solutions.')}
                   </p>
-                  
+
                   <div className="grid grid-cols-2 gap-4 w-full max-w-xs">
                     <div className="p-4 rounded-lg bg-dark-gray border border-gray-800 flex flex-col items-center hover:shadow-glow-sm transition-all">
                       <span className="text-2xl font-bold text-electric-blue">350+</span>
@@ -545,7 +547,7 @@ const AuthPage = () => {
                       <span className="text-xs text-muted-gray">{t('auth.customers', 'Happy Customers')}</span>
                     </div>
                   </div>
-                  
+
                   <div className="mt-6 w-full">
                     <motion.div 
                       className="group relative overflow-hidden rounded-lg p-1 bg-gradient-to-r from-electric-blue to-vivid-purple w-full"
@@ -566,7 +568,7 @@ const AuthPage = () => {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );
