@@ -227,7 +227,7 @@ const Navbar = () => {
                   <>
                     <hr className="border-gray-800" />
                     <div className="text-sm text-muted-gray">
-                      Signed in as: <span className="text-white">{user.username}</span>
+                      {t('navigation.signed_in_as', 'Signed in as:')} <span className="text-white">{user.username}</span>
                     </div>
                     {user.isAdmin && (
                       <Link href="/admin">
