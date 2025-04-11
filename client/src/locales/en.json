@@ -80,5 +80,17 @@
     "back": "Back",
     "next": "Next",
     "previous": "Previous"
+  },
+  "homepage": {
+    "featured_collection": "Featured Collection",
+    "view_all_products": "View All Products",
+    "why_choose_lux": "Why Choose LUX",
+    "experience_blend": "Experience the perfect blend of artistry, technology, and luxury in every one of our furniture pieces.",
+    "premium_quality": "Premium Quality",
+    "premium_desc": "Handcrafted furniture using premium materials that stand the test of time.",
+    "smart_features": "Smart Features",
+    "smart_desc": "App-enabled furniture with voice controls, comfort settings, and customizable options.",
+    "ar_technology": "AR Technology",
+    "ar_desc": "Preview furniture in your space with our advanced augmented reality tool."
   }
 }
