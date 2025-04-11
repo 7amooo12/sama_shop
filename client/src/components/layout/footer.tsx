@@ -10,7 +10,7 @@ const Footer = () => {
             <Link href="/">
               <a className="mb-6 block">
                 <span className="font-syncopate text-2xl font-bold text-white">
-                  <span className="text-electric-blue">LUMI</span>NA
+                  <span className="text-electric-blue">LUX</span>
                 </span>
               </a>
             </Link>
@@ -40,7 +40,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          
+
           <div>
             <h3 className="font-space font-medium text-white mb-4">Quick Links</h3>
             <ul className="space-y-3">
@@ -81,7 +81,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <h3 className="font-space font-medium text-white mb-4">Customer Service</h3>
             <ul className="space-y-3">
@@ -122,7 +122,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <h3 className="font-space font-medium text-white mb-4">Contact Information</h3>
             <ul className="space-y-4">
@@ -141,17 +141,17 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="text-electric-blue mr-3" />
-                <a href="mailto:info@luminachandeliers.com" className="text-sm text-muted-gray hover:text-electric-blue transition-colors">
-                  info@luminachandeliers.com
+                <a href="mailto:info@lux.com" className="text-sm text-muted-gray hover:text-electric-blue transition-colors">
+                  info@lux.com
                 </a>
               </li>
             </ul>
           </div>
         </div>
-        
+
         <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between">
           <p className="text-xs text-muted-gray">
-            &copy; {new Date().getFullYear()} Lumina Chandeliers. All rights reserved.
+            &copy; {new Date().getFullYear()} LUX Chandeliers. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0 flex space-x-4">
             <Link href="/privacy">
