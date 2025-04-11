@@ -77,7 +77,8 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center" dir={i18n.dir()}>
+          <div className={cn("flex gap-8", i18n.dir() === 'rtl' ? 'space-x-reverse' : '')}>
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href}>
               <a
@@ -92,6 +93,7 @@ const Navbar = () => {
               </a>
             </Link>
           ))}
+          </div>
         </nav>
 
         {/* Desktop Actions */}
