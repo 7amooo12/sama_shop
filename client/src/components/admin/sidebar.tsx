@@ -77,7 +77,7 @@ const AdminSidebar = () => {
             isCollapsed ? "opacity-0 invisible w-0" : "opacity-100 visible"
           )}>
             <span className="font-syncopate text-xl font-bold text-white">
-              <span className="text-electric-blue">LUMI</span>NA
+              <span className="text-electric-blue">LUX</span>
             </span>
             <span className="text-xs text-electric-blue ml-1 font-medium">ADMIN</span>
           </a>
