@@ -180,8 +180,8 @@ const AuthPage = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <main className="flex-grow py-12">
-        <div className="max-w-7xl mx-auto px-6">
+      <main className="flex-grow pt-24 px-6">
+        <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Form Column */}
             <div>

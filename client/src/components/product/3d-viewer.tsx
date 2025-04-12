@@ -4,11 +4,12 @@ import { Loader2 } from 'lucide-react';
 
 interface ProductViewerProps {
   imageUrl: string;
+  lightImageUrl?: string;
   isLightOn: boolean;
   alt: string;
 }
 
-const ProductViewer = ({ imageUrl, isLightOn, alt }: ProductViewerProps) => {
+const ProductViewer = ({ imageUrl, lightImageUrl, isLightOn, alt }: ProductViewerProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
@@ -79,16 +80,29 @@ const ProductViewer = ({ imageUrl, isLightOn, alt }: ProductViewerProps) => {
               }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
             >
-              {/* Using image as a placeholder for actual 3D model */}
-              <motion.img 
-                src={imageUrl} 
-                alt={alt}
-                className="max-h-[350px] object-contain z-10"
-                animate={{
-                  filter: isLightOn ? 'brightness(1.3) contrast(1.1)' : 'brightness(1) contrast(1)',
-                }}
-                transition={{ duration: 0.5 }}
-              />
+              {/* Product images with transition effect */}
+              <div className="relative">
+                <motion.img 
+                  src={imageUrl} 
+                  alt={alt}
+                  className="max-h-[350px] object-contain z-10"
+                  animate={{
+                    opacity: isLightOn ? 0 : 1
+                  }}
+                  transition={{ duration: 0.5 }}
+                />
+                {lightImageUrl && (
+                  <motion.img 
+                    src={lightImageUrl} 
+                    alt={`${alt} - illuminated`}
+                    className="max-h-[350px] object-contain z-10 absolute inset-0"
+                    animate={{
+                      opacity: isLightOn ? 1 : 0
+                    }}
+                    transition={{ duration: 0.5 }}
+                  />
+                )}
+              </div>
             </motion.div>
           </div>
           

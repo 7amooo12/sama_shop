@@ -65,8 +65,8 @@ export class MemStorage implements IStorage {
     // Create admin user
     this.createUser({
       username: "admin",
-      password: "password", // This will be hashed in auth.ts
-      email: "admin@lumina.com",
+      password: "c506dc0b9fca274452f7e920cdf08fb62a652be590cefb9512dced468cff823d3dffd6881a34b238bf38c8616f8f8d6568564e0ea1ed5d2231c59b8c13d1bc66.4d55872cb88fbaddd45bc62766be3bea", // Hashed password for admin123
+      email: "admin@admin.com",
       firstName: "Admin",
       lastName: "User",
       isAdmin: true,

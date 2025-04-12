@@ -264,8 +264,10 @@ const Navbar = () => {
                 ) : (
                   <>
                     <hr className="border-gray-800" />
+
+
                     <Link href="/auth">
-                      <a className="text-sm text-white hover:text-electric-blue transition-colors">
+                      <a onClick={() => setIsOpen(false)} className="text-sm text-white hover:text-electric-blue transition-colors">
                         {t('navigation.signin', 'Sign In / Register')}
                       </a>
                     </Link>

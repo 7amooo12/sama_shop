@@ -136,7 +136,7 @@ const ProductsPage = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <main className="flex-grow">
+      <main className="flex-grow pt-24">
         {/* Hero banner */}
         <div className="relative h-[30vh] overflow-hidden">
           <div className="absolute inset-0 hex-pattern circuit-lines opacity-20"></div>

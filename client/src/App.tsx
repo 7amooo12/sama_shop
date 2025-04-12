@@ -13,6 +13,7 @@ import AdminUsers from "@/pages/admin/users";
 import { ProtectedRoute } from "./lib/protected-route";
 import RTLTransitionWrapper from "@/components/rtl-transition-wrapper";
 import { useTranslation } from "react-i18next";
+import { AuthProvider } from "@/hooks/use-auth";
 
 function Router() {
   return (
@@ -41,11 +42,13 @@ function App() {
   const isRTL = i18n.dir() === 'rtl';
 
   return (
-    <RTLTransitionWrapper>
-      <div dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'font-family-rtl' : 'font-family-ltr'}>
-        <Router />
-      </div>
-    </RTLTransitionWrapper>
+    <AuthProvider>
+      <RTLTransitionWrapper>
+        <div dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'font-family-rtl' : 'font-family-ltr'}>
+          <Router />
+        </div>
+      </RTLTransitionWrapper>
+    </AuthProvider>
   );
 }
 

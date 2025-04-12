@@ -169,7 +169,8 @@ const ProductPage = () => {
                 
                 {/* 3D Viewer or Image */}
                 <ProductViewer 
-                  imageUrl={product.imageUrl} 
+                  imageUrl={product.imageUrl}
+                  lightImageUrl={product.lightImageUrl}
                   isLightOn={isLightOn} 
                   alt={product.name}
                 />

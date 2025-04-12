@@ -22,6 +22,7 @@ export const products = pgTable("products", {
   price: doublePrecision("price").notNull(),
   salePrice: doublePrecision("sale_price"),
   imageUrl: text("image_url").notNull(),
+  lightImageUrl: text("light_image_url"),
   category: text("category").notNull(),
   tags: text("tags").array(),
   features: jsonb("features"),
