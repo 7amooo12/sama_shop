@@ -98,10 +98,3 @@ export type CartItem = {
   quantity: number;
   product: Product;
 };
-
-// Helper function to ensure correct typing for cart items
-export function ensureCartItems(items: unknown): CartItem[] {
-  if (!items) return [];
-  if (!Array.isArray(items)) return [];
-  return items as CartItem[];
-}

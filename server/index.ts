@@ -1,69 +1,76 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { createTables } from "./create-tables";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-  const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
-
-  res.on("finish", () => {
-    const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-
-      log(logLine);
-    }
-  });
-
+// Simple logging middleware
+app.use((req, _, next) => {
+  log(`${req.method} ${req.path}`);
   next();
 });
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ status: "OK", time: new Date().toISOString() });
+});
+
+// Special endpoint to display setup instructions
+app.get("/api/setup-instructions", (req, res) => {
+  res.json({
+    message: "Your database tables need to be created manually in Supabase",
+    instructions: [
+      "1. Log into your Supabase dashboard",
+      "2. Go to SQL Editor",
+      "3. Open the supabase-setup.sql file from this project",
+      "4. Run the SQL script in the editor",
+      "5. Restart the application"
+    ]
+  });
+});
+
 (async () => {
-  const server = await registerRoutes(app);
+  try {
+    // Check if tables exist in the database
+    const tablesResult = await createTables();
+    
+    if (!tablesResult) {
+      log("WARNING: Some database tables might be missing. Please check the setup instructions.");
+      log("Visit http://localhost:5000/api/setup-instructions for more information.");
+    }
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+    const server = await registerRoutes(app);
 
-    res.status(status).json({ message });
-    throw err;
-  });
+    // Error handling middleware
+    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+      const status = err.status || err.statusCode || 500;
+      const message = err.message || "Internal Server Error";
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
+      log(`Error: ${message}`);
+      res.status(status).json({ message });
+    });
+
+    // Setup Vite for development
+    if (app.get("env") === "development") {
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
+
+    // Start the server
+    const port = 5000;
+    server.listen({
+      port,
+      host: "0.0.0.0", // Allow external connections
+    }, () => {
+      log(`Server running on port ${port}`);
+      log("To check API status, visit: http://localhost:5000/health");
+      log("For database setup instructions, visit: http://localhost:5000/api/setup-instructions");
+    });
+  } catch (error) {
+    log(`Server startup error: ${error}`);
   }
-
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
-    port,
-    host: "localhost",
-  }, () => {
-    log(`serving on port ${port}`);
-  });
 })();
